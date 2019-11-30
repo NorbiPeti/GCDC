@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{65169A16-0FFD-4769-ACAB-4C15A4C74C3D}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>GCDC</RootNamespace>
+        <AssemblyName>GCDC</AssemblyName>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="CommandLine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\CommandLine.dll</HintPath>
+        </Reference>
+        <Reference Include="FullGame, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\FullGame.dll</HintPath>
+        </Reference>
+        <Reference Include="Gamecraft.Blocks.ConsoleBlock, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Gamecraft.Blocks.ConsoleBlock.dll</HintPath>
+        </Reference>
+        <Reference Include="IllusionPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>IllusionPlugin.dll</HintPath>
+        </Reference>
+        <Reference Include="Robocraft.MainGame.AutoEnterSimulation, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Robocraft.MainGame.AutoEnterSimulation.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.AccountPreferences, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.AccountPreferences.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Blocks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Blocks.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Blocks.Ghost, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Blocks.Ghost.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Blocks.Triggers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Blocks.Triggers.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Character, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Character.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Common.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Crosshair, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Crosshair.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.EntityStreamUtility, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.EntityStreamUtility.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.FrontEnd, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.FrontEnd.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GameSignalHandling, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GameSignalHandling.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUI.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUI.DebugDisplay, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUI.DebugDisplay.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUI.RemoveBlock, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUI.RemoveBlock.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUI.ScaleGhost, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUI.ScaleGhost.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUI.SignalLabel, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUI.SignalLabel.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.GUIs.WorkshopPrefabs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.GUIs.WorkshopPrefabs.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Input, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Input.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Inventory, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Inventory.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.MachineEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.MachineEditor.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.MainGame, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.MainGame.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.MainSimulation, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.MainSimulation.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Multiplayer, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Multiplayer.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Multiplayer.NetworkEntityStream, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Multiplayer.NetworkEntityStream.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.MultiplayerInput, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.MultiplayerInput.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Party, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Party.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.PartyGui, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.PartyGui.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Physics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Physics.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.PilotSeat, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.PilotSeat.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Player, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Player.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Priority, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Priority.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Rendering, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Rendering.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Rendering.Mock, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Rendering.Mock.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.SaveAndLoad, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.SaveAndLoad.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.SaveGameDialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.SaveGameDialog.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Serializers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Serializers.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.Services, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.Services.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.SignalHandling, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.SignalHandling.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX.StateSync, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX.StateSync.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX_SpawnPoints, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX_SpawnPoints.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocraftX_TextBlock, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocraftX_TextBlock.dll</HintPath>
+        </Reference>
+        <Reference Include="RobocratX.SimulationCompositionRoot, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\RobocratX.SimulationCompositionRoot.dll</HintPath>
+        </Reference>
+        <Reference Include="Svelto.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Svelto.Common.dll</HintPath>
+        </Reference>
+        <Reference Include="Svelto.ECS, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Svelto.ECS.dll</HintPath>
+        </Reference>
+        <Reference Include="Svelto.Services, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Svelto.Services.dll</HintPath>
+        </Reference>
+        <Reference Include="Svelto.Tasks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Svelto.Tasks.dll</HintPath>
+        </Reference>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+        <Reference Include="Unity.Entities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Unity.Entities.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Physics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Unity.Physics.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="uREPL, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\uREPL.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="DiscordEngineInjectionPatch.cs" />
+        <Compile Include="GCDCPlugin.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="TextBlockUpdateEngine.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="IllusionPlugin.dll" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Lib.Harmony" Version="1.2.0.1" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>
