@@ -1,4 +1,7 @@
-﻿using IllusionPlugin;
+﻿using System.Reflection;
+using Harmony;
+using IllusionPlugin;
+using UnityEngine;
 
 namespace GCDC
 {
@@ -6,35 +9,39 @@ namespace GCDC
     {
         public string Name { get; } = "GCDC";
         public string Version { get; } = "v0.0.1";
+        public static HarmonyInstance harmony { get; protected set; }
+        public const string HarmonyID = "io.github.norbipeti.GCDC";
         
         public void OnApplicationStart()
         {
-            throw new System.NotImplementedException();
+            if (harmony == null)
+            {
+                harmony = HarmonyInstance.Create(HarmonyID);
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
+            }
+
+            Debug.Log("GCDC loaded");
         }
 
         public void OnApplicationQuit()
         {
-            throw new System.NotImplementedException();
+            harmony?.UnpatchAll(HarmonyID);
         }
 
         public void OnLevelWasLoaded(int level)
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnLevelWasInitialized(int level)
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnUpdate()
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnFixedUpdate()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
