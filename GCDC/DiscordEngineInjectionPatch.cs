@@ -5,6 +5,7 @@ using Harmony;
 using RobocraftX;
 using RobocraftX.GUI.CommandLine;
 using RobocraftX.Multiplayer;
+using RobocraftX.Services.MultiplayerNetworking;
 using RobocraftX.StateSync;
 using Svelto.Context;
 using Svelto.ECS;
@@ -32,7 +33,8 @@ namespace GCDC
             return _ComposeMethodInfo(ConsoleBlockCompositionRoot.Compose);
         }
 
-        private delegate void ComposeAction(EnginesRoot er, ref StateSyncRegistrationHelper ssrh, bool isAuthoritative);
+        private delegate void ComposeAction(EnginesRoot er, ref StateSyncRegistrationHelper ssrh,
+            NetworkReceivers networkReceivers, NetworkSender networkSende, bool isAuthoritative);
         private static MethodInfo _ComposeMethodInfo(ComposeAction a)
         {
             return a.Method;

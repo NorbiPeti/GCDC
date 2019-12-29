@@ -44,6 +44,9 @@
         <Reference Include="IllusionPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>IllusionPlugin.dll</HintPath>
         </Reference>
+        <Reference Include="MultiplayerNetworking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\MultiplayerNetworking.dll</HintPath>
+        </Reference>
         <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Newtonsoft.Json.dll</HintPath>
         </Reference>
@@ -178,9 +181,6 @@
         </Reference>
         <Reference Include="Svelto.ECS, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Svelto.ECS.dll</HintPath>
-        </Reference>
-        <Reference Include="Svelto.Services, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\Svelto.Services.dll</HintPath>
         </Reference>
         <Reference Include="Svelto.Tasks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Svelto.Tasks.dll</HintPath>
