@@ -37,7 +37,8 @@ namespace GCDC
             if (!RuntimeCommands.HasRegistered("dc"))
                 RuntimeCommands.Register<string>("dc", SendMessage);
             if (!RuntimeCommands.HasRegistered("dcsetup"))
-                RuntimeCommands.Register<string>("dcsetup", Setup);
+                RuntimeCommands.Register<string>("dcsetup", Setup,
+                    "Initial setup for GCDC. The argument is the channel ID first.");
             if (File.Exists("gcdc.json"))
             {
                 var jo = JObject.Load(new JsonTextReader(File.OpenText("gcdc.json")));
@@ -48,24 +49,30 @@ namespace GCDC
                 Start();
         }
 
-        public void Setup(string token)
+        public void Setup(string tokenOrChannel)
         {
-            if (string.IsNullOrWhiteSpace(token))
+            if (!tokenOrChannel.Contains("-"))
             {
+                if (!int.TryParse(tokenOrChannel, out _))
+                {
+                    Log.Error("Bad format for channel ID.");
+                    return;
+                }
+
                 Process.Start(
-                    "https://discordapp.com/oauth2/authorize?client_id=680138144812892371&redirect_uri=https%3A%2F%2Fgcdc.herokuapp.com%2Fapi%2Fusers%2Fregister&response_type=code&scope=identify&state=551075431336378398");
+                    "https://discordapp.com/oauth2/authorize?client_id=680138144812892371&redirect_uri=https%3A%2F%2Fgcdc.herokuapp.com%2Fapi%2Fusers%2Fregister&response_type=code&scope=identify&state=" +
+                    tokenOrChannel);
                 Log.Output(
                     "Please authorize the GCDC app on the page that should open. This connection is only used to avoid account spam and to display your Discord name.");
             }
             else
             {
-                _token = token;
+                _token = tokenOrChannel;
                 try
                 {
-                    if (JObject.Parse(WebUtils.Request("users/get?token=" + token))["response"].Value<string>() == "OK")
+                    if (JObject.Parse(WebUtils.Request("users/get?token=" + tokenOrChannel))["response"].Value<string>() == "OK")
                     {
-                        var jo = new JObject();
-                        jo["token"] = token;
+                        var jo = new JObject {["token"] = tokenOrChannel};
                         File.WriteAllText("gcdc.json", jo.ToString());
                         Start();
                         Log.Output(
