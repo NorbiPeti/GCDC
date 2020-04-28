@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using GamecraftModdingAPI.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RobocraftX.Blocks.GUI;
 using RobocraftX.Common;
 using RobocraftX.Common.Input;
 using RobocraftX.Common.Utilities;
@@ -23,84 +27,114 @@ using uREPL;
 
 namespace GCDC
 {
-    public class TextBlockUpdateEngine : IQueryingEntitiesEngine, IDeterministicSim, IInitializeOnBuildStart
+    public class TextBlockUpdateEngine : IDeterministicSim, IInitializeOnBuildStart, IApiEngine
     {
-        private DiscordSocketClient _client;
+        private string _token;
+        private bool _running;
+        private Thread _rect;
         public void Ready()
         {
+            if (!RuntimeCommands.HasRegistered("dc"))
+                RuntimeCommands.Register<string>("dc", SendMessage);
+            if (!RuntimeCommands.HasRegistered("dcsetup"))
+                RuntimeCommands.Register<string>("dcsetup", Setup);
+            if (File.Exists("gcdc.json"))
+            {
+                var jo = JObject.Load(new JsonTextReader(File.OpenText("gcdc.json")));
+                _token = jo["token"]?.Value<string>();
+            }
+
+            if (_token != null)
+                Start();
+        }
+
+        public void Setup(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                Process.Start(
+                    "https://discordapp.com/oauth2/authorize?client_id=680138144812892371&redirect_uri=https%3A%2F%2Fgcdc.herokuapp.com%2Fapi%2Fusers%2Fregister&response_type=code&scope=identify&state=551075431336378398");
+                Log.Output(
+                    "Please authorize the GCDC app on the page that should open. This connection is only used to avoid account spam and to display your Discord name.");
+            }
+            else
+            {
+                _token = token;
+                try
+                {
+                    if (JObject.Parse(WebUtils.Request("users/get?token=" + token))["response"].Value<string>() == "OK")
+                    {
+                        var jo = new JObject();
+                        jo["token"] = token;
+                        File.WriteAllText("gcdc.json", jo.ToString());
+                        Start();
+                        Log.Output(
+                            "Successfully logged in. You can now use a text block named Discord and the dc command.");
+                    }
+                    else
+                        Log.Error("Failed to verify login. Please try again.");
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Failed to verify login. Please try again. (Error logged.)");
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
+        public void SendMessage(string message)
+        {
+            if (!_running)
+            {
+                Log.Error("Run dcsetup first.");
+                return;
+            }
+
             try
             {
-                /*Console.WriteLine("Current directory: " + Environment.CurrentDirectory);
-                Console.WriteLine(Assembly.LoadFrom("Discord.Net.WebSocket.dll")?.DefinedTypes?.Select(t => t.FullName)
-                    .Aggregate((a, b) => a + "\n" + b));*/ //Spent a couple hours trying to figure out why it doesn't even load anymore - somehow I got a completely different System.Collections.Immutable.dll
-                if (!RuntimeCommands.HasRegistered("dc"))
-                    RuntimeCommands.Register<string>("dc", AddMessage);
-                Start();
+                var parameters = "token=" + _token + "&message=" + message;
+                var resp = JObject.Parse(WebUtils.Request("messages/send?" + parameters, ""));
+                if (resp["response"]
+                    .Value<string>() == "OK")
+                {
+                    AddMessage("<nobr><" + resp["username"] + "> " + message);
+                    Log.Output("Message sent");
+                }
+                else
+                    Log.Error("Failed to send message");
             }
-            catch (TypeLoadException e)
+            catch (Exception e)
             {
-                Console.WriteLine("Type load exception for type: "+e.TypeName);
+                Log.Error("Failed to send message (error logged).");
                 Console.WriteLine(e);
             }
         }
 
-        private void Start()
+        public void Start()
         {
-            _client=new DiscordSocketClient(new DiscordSocketConfig()
+            if (_running) return;
+            _running = true;
+            _rect = new Thread(() =>
             {
-               LogLevel = LogSeverity.Debug,
-               DefaultRetryMode = RetryMode.RetryRatelimit
-            });
-            _client.Log += msg=>
-            {
-                Log.Output(msg.Message);
-                //Window.selected.OutputLog(new Log.Data(msg.Message, "Discord", Log.Level.Verbose));
-                return Task.CompletedTask;
-            };
-            Setup();
-        }
-        private async void Setup()
-        {
-            try
-            {
-                const string path = "discordToken.json";
-                const string notoken =
-                    "Please add your bot token to the discordToken.json file in game files and run this again.";
-                if (!File.Exists(path))
+                Console.WriteLine("Starting DC receiver thread...");
+                while (_running)
                 {
-                    var obj = new JObject {["token"] = "Put your token here"};
-                    File.WriteAllText(path, obj.ToString());
-                    Log.Error(notoken);
-                    return;
-                }
-
-                string token;
-                try
-                {
-                    token = (string) JObject.Parse(File.ReadAllText(path))["token"];
-                    if (token.Contains(" "))
+                    try
                     {
-                        Log.Error(notoken);
-                        return;
+                        string resp = WebUtils.Request("messages/get?token=" + _token);
+                        var jo = JObject.Parse(resp);
+                        AddMessage("<nobr><" + jo["username"] + "> " + jo["message"]);
                     }
-
+                    catch (WebException)
+                    {
+                        // ignored
+                    }
                 }
-                catch (JsonReaderException exception)
-                {
-                    Log.Error("Failed to read token! " + exception);
-                    return;
-                }
-
-                await _client.LoginAsync(TokenType.Bot, token);
-                await _client.StartAsync();
-            }
-            catch (Exception e)
-            {
-                Log.Error(e.ToString());
-            }
+            }) {Name = "DC Receiver Thread"};
+            _rect.Start();
         }
 
-        public IEntitiesDB entitiesDB { get; set; }
+        public EntitiesDB entitiesDB { get; set; }
         public string name { get; } = "GCDC-TextUpdate";
         private volatile Queue<string> messages = new Queue<string>();
         private volatile bool updatedTextBlock;
@@ -132,5 +166,13 @@ namespace GCDC
             updatedTextBlock = false; //Update text block
             return new JobHandle();
         }
+
+        public void Dispose()
+        {
+            _running = false;
+            _rect.Interrupt();
+        }
+
+        public string Name { get; } = "GCDCEngine";
     }
 }

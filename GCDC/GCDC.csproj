@@ -32,8 +32,14 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BlockEntityFactory, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\BlockEntityFactory.dll</HintPath>
+        </Reference>
         <Reference Include="CommandLine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\CommandLine.dll</HintPath>
+        </Reference>
+        <Reference Include="DataLoader, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\DataLoader.dll</HintPath>
         </Reference>
         <Reference Include="FullGame, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\FullGame.dll</HintPath>
@@ -41,17 +47,20 @@
         <Reference Include="Gamecraft.Blocks.ConsoleBlock, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Gamecraft.Blocks.ConsoleBlock.dll</HintPath>
         </Reference>
+        <Reference Include="GamecraftModdingAPI, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\GamecraftModdingAPI\GamecraftModdingAPI\bin\Debug\net472\GamecraftModdingAPI.dll</HintPath>
+        </Reference>
         <Reference Include="IllusionPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>IllusionPlugin.dll</HintPath>
         </Reference>
         <Reference Include="MultiplayerNetworking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\MultiplayerNetworking.dll</HintPath>
         </Reference>
-        <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <Reference Include="Newtonsoft.Json, Version=12.0.1.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Newtonsoft.Json.dll</HintPath>
         </Reference>
-        <Reference Include="Robocraft.MainGame.AutoEnterSimulation, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\Robocraft.MainGame.AutoEnterSimulation.dll</HintPath>
+        <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="RobocraftX.AccountPreferences, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.AccountPreferences.dll</HintPath>
@@ -74,14 +83,8 @@
         <Reference Include="RobocraftX.Crosshair, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.Crosshair.dll</HintPath>
         </Reference>
-        <Reference Include="RobocraftX.EntityStreamUtility, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\RobocraftX.EntityStreamUtility.dll</HintPath>
-        </Reference>
         <Reference Include="RobocraftX.FrontEnd, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.FrontEnd.dll</HintPath>
-        </Reference>
-        <Reference Include="RobocraftX.GameSignalHandling, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\RobocraftX.GameSignalHandling.dll</HintPath>
         </Reference>
         <Reference Include="RobocraftX.GUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.GUI.dll</HintPath>
@@ -95,17 +98,11 @@
         <Reference Include="RobocraftX.GUI.ScaleGhost, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.GUI.ScaleGhost.dll</HintPath>
         </Reference>
-        <Reference Include="RobocraftX.GUI.SignalLabel, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\RobocraftX.GUI.SignalLabel.dll</HintPath>
-        </Reference>
         <Reference Include="RobocraftX.GUIs.WorkshopPrefabs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.GUIs.WorkshopPrefabs.dll</HintPath>
         </Reference>
         <Reference Include="RobocraftX.Input, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.Input.dll</HintPath>
-        </Reference>
-        <Reference Include="RobocraftX.Inventory, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\RobocraftX.Inventory.dll</HintPath>
         </Reference>
         <Reference Include="RobocraftX.MachineEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.MachineEditor.dll</HintPath>
@@ -140,9 +137,6 @@
         <Reference Include="RobocraftX.Player, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.Player.dll</HintPath>
         </Reference>
-        <Reference Include="RobocraftX.Priority, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\RobocraftX.Priority.dll</HintPath>
-        </Reference>
         <Reference Include="RobocraftX.Rendering, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocraftX.Rendering.dll</HintPath>
         </Reference>
@@ -176,9 +170,6 @@
         <Reference Include="RobocratX.SimulationCompositionRoot, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\RobocratX.SimulationCompositionRoot.dll</HintPath>
         </Reference>
-        <Reference Include="Svelto.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>ref\Svelto.Common.dll</HintPath>
-        </Reference>
         <Reference Include="Svelto.ECS, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Svelto.ECS.dll</HintPath>
         </Reference>
@@ -191,6 +182,9 @@
         <Reference Include="System.Xml" />
         <Reference Include="Unity.Entities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Unity.Entities.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Mathematics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>ref\Unity.Mathematics.dll</HintPath>
         </Reference>
         <Reference Include="Unity.Physics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>ref\Unity.Physics.dll</HintPath>
