@@ -53,7 +53,7 @@ namespace GCDC
         {
             if (!tokenOrChannel.Contains("-"))
             {
-                if (!int.TryParse(tokenOrChannel, out _))
+                if (!long.TryParse(tokenOrChannel, out _))
                 {
                     Log.Error("Bad format for channel ID.");
                     return;
@@ -67,11 +67,11 @@ namespace GCDC
             }
             else
             {
-                _token = tokenOrChannel;
                 try
                 {
                     if (JObject.Parse(WebUtils.Request("users/get?token=" + tokenOrChannel))["response"].Value<string>() == "OK")
                     {
+                        _token = tokenOrChannel;
                         var jo = new JObject {["token"] = tokenOrChannel};
                         File.WriteAllText("gcdc.json", jo.ToString());
                         Start();
@@ -135,6 +135,10 @@ namespace GCDC
                     catch (WebException)
                     {
                         // ignored
+                    }
+                    catch (ThreadInterruptedException)
+                    {
+                        break;
                     }
                 }
             }) {Name = "DC Receiver Thread"};
