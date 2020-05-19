@@ -11,6 +11,11 @@
         <AssemblyName>GCDC</AssemblyName>
         <TargetFramework>net472</TargetFramework>
         <FileAlignment>512</FileAlignment>
+        <AssemblyVersion>0.0.2.0</AssemblyVersion>
+        <FileVersion>0.0.2.0</FileVersion>
+        <ProductVersion>0.0.2.0</ProductVersion>
+        <Product>GCDC</Product>
+        <ProductName>GCDC</ProductName>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
