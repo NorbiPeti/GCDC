@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using Gamecraft.Blocks.ConsoleBlock;
-using Harmony;
+using HarmonyLib;
 using RobocraftX;
 using RobocraftX.GUI.CommandLine;
 using RobocraftX.Multiplayer;
@@ -27,7 +27,7 @@ namespace GCDC
                 Debug.Log("Not authoritative, not adding Discord engine");
         }
 
-        static MethodBase TargetMethod(HarmonyInstance instance)
+        static MethodBase TargetMethod()
         {
             return _ComposeMethodInfo(ConsoleBlockCompositionRoot.Compose);
         }

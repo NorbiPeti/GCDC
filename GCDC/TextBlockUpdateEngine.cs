@@ -4,30 +4,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
-using Discord;
-using Discord.WebSocket;
-using GamecraftModdingAPI.Utility;
+using GamecraftModdingAPI.Engines;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RobocraftX.Common;
 using RobocraftX.Common.Input;
 using RobocraftX.Common.Utilities;
-using RobocraftX.SimulationModeState;
 using RobocraftX.StateSync;
 using Svelto.ECS;
-using Svelto.ECS.Experimental;
 using Unity.Jobs;
-using UnityEngine.Diagnostics;
 using uREPL;
 
 namespace GCDC
 {
-    public class TextBlockUpdateEngine : IDeterministicSim, IInitializeOnBuildStart, IApiEngine
+    public class TextBlockUpdateEngine : IDeterministicTimeStopped, IDeterministicTimeRunning, IApiEngine, IUnorderedInitializeOnTimeStoppedModeEntered
     {
         private string _token;
         private bool _running;
@@ -172,7 +162,7 @@ namespace GCDC
             updatedTextBlock = false;
         }
 
-        public JobHandle OnInitializeBuildMode()
+        public JobHandle OnInitializeTimeStoppedMode()
         {
             updatedTextBlock = false; //Update text block
             return new JobHandle();
@@ -185,5 +175,6 @@ namespace GCDC
         }
 
         public string Name { get; } = "GCDCEngine";
+        public bool isRemovable { get; } = false;
     }
 }
