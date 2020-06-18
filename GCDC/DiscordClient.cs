@@ -17,18 +17,16 @@ using uREPL;
 
 namespace GCDC
 {
-    public class TextBlockUpdateEngine : IDeterministicTimeStopped, IDeterministicTimeRunning, IApiEngine, IUnorderedInitializeOnTimeStoppedModeEntered
+    public class DiscordClient
     {
         private string _token;
         private bool _running;
         private Thread _rect;
+        private readonly Queue<string> messages = new Queue<string>();
+        private readonly GCDCPlugin plugin;
+        public DiscordClient(GCDCPlugin plugin) => this.plugin = plugin;
         public void Ready()
         {
-            if (!RuntimeCommands.HasRegistered("dc"))
-                RuntimeCommands.Register<string>("dc", SendMessage);
-            if (!RuntimeCommands.HasRegistered("dcsetup"))
-                RuntimeCommands.Register<string>("dcsetup", Setup,
-                    "Initial setup for GCDC. The argument is the channel ID first.");
             if (File.Exists("gcdc.json"))
             {
                 var jo = JObject.Load(new JsonTextReader(File.OpenText("gcdc.json")));
@@ -59,7 +57,7 @@ namespace GCDC
             {
                 try
                 {
-                    if (JObject.Parse(WebUtils.Request("users/get?token=" + tokenOrChannel))["response"].Value<string>() == "OK")
+                    if (JObject.Parse(WebUtils.Request("users/get?token=" + tokenOrChannel))["response"]?.Value<string>() == "OK")
                     {
                         _token = tokenOrChannel;
                         var jo = new JObject {["token"] = tokenOrChannel};
@@ -91,8 +89,7 @@ namespace GCDC
             {
                 var parameters = "token=" + _token + "&message=" + message;
                 var resp = JObject.Parse(WebUtils.Request("messages/send?" + parameters, ""));
-                if (resp["response"]
-                    .Value<string>() == "OK")
+                if (resp["response"]?.Value<string>() == "OK")
                 {
                     AddMessage("<nobr><" + resp["username"] + "> " + message);
                     Log.Output("Message sent");
@@ -135,46 +132,20 @@ namespace GCDC
             _rect.Start();
         }
 
-        public EntitiesDB entitiesDB { get; set; }
-        public string name { get; } = "GCDC-TextUpdate";
-        private volatile Queue<string> messages = new Queue<string>();
-        private volatile bool updatedTextBlock;
-        
-        public JobHandle SimulatePhysicsStep(
-            in float deltaTime,
-            in PhysicsUtility utility,
-            in PlayerInput[] playerInputs) //Gamecraft.Blocks.ConsoleBlock.dll
-        {
-            if (updatedTextBlock)
-                return new JobHandle();
-            var txt = messages.Count > 0 ? messages.Aggregate((current, msg) => current + "\n" + msg) : "<No messages yet>";
-            RuntimeCommands.Call("ChangeTextBlockCommand", "Discord", txt);
-            updatedTextBlock = true;
-
-            return new JobHandle();
-        }
-
         public void AddMessage(string message)
         {
             messages.Enqueue(message);
             if (messages.Count > 10)
                 messages.Dequeue();
-            updatedTextBlock = false;
+            plugin.Update(messages);
         }
 
-        public JobHandle OnInitializeTimeStoppedMode()
-        {
-            updatedTextBlock = false; //Update text block
-            return new JobHandle();
-        }
-
-        public void Dispose()
+        public void Stop()
         {
             _running = false;
             _rect.Interrupt();
         }
 
-        public string Name { get; } = "GCDCEngine";
-        public bool isRemovable { get; } = false;
+        public void Update() => plugin.Update(messages);
     }
 }

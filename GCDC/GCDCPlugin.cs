@@ -1,31 +1,55 @@
-﻿using System.Reflection;
-using HarmonyLib;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using GamecraftModdingAPI.App;
+using GamecraftModdingAPI.Commands;
 using IllusionPlugin;
+using RobocraftX.Schedulers;
+using Svelto.Tasks.ExtraLean;
 using UnityEngine;
+using uREPL;
 
 namespace GCDC
 {
     public class GCDCPlugin : IPlugin
     {
-        public string Name { get; } = "GCDC";
-        public string Version { get; } = "v0.0.1";
-        public static Harmony harmony { get; protected set; }
-        public const string HarmonyID = "io.github.norbipeti.GCDC";
-        
+        public string Name { get; } = Assembly.GetExecutingAssembly().GetName().Name;
+        public string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public void OnApplicationStart()
         {
-            if (harmony == null)
-            {
-                harmony = new Harmony(HarmonyID);
-                harmony.PatchAll(Assembly.GetExecutingAssembly());
-            }
-
+            GamecraftModdingAPI.Main.Init();
+            var client = new DiscordClient(this);
+            CommandBuilder.Builder("dc", "Send messages to Discord.")
+                .Action<string>(client.SendMessage).Build();
+            CommandBuilder.Builder("dcsetup", "Initial setup for GCDC. The argument is the channel ID first. For example: dcsetup \"420159832423923714\"")
+                .Action<string>(client.Setup).Build();
+            Game.Enter += (sender, e) =>
+                client.Ready();
+            Game.Edit += (sender, e) =>
+                client.Update(); //Update text block
+            Game.Exit += (sender, e) =>
+                client.Stop();
             Debug.Log("GCDC loaded");
+        }
+
+        public void Update(Queue<string> messages)
+        {
+            UpdateEnum(messages).RunOn(ExtraLean.EveryFrameStepRunner_RUNS_IN_TIME_STOPPED_AND_RUNNING);
+        }
+
+        private IEnumerator UpdateEnum(Queue<string> messages)
+        {
+            var txt = messages.Count > 0
+                ? messages.Aggregate((current, msg) => current + "\n" + msg)
+                : "<No messages yet>";
+            RuntimeCommands.Call("ChangeTextBlockCommand", "Discord", txt);
+            yield break;
         }
 
         public void OnApplicationQuit()
         {
-            harmony?.UnpatchAll(HarmonyID);
         }
 
         public void OnLevelWasLoaded(int level)
